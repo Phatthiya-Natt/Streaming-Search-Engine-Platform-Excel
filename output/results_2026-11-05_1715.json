@@ -1,0 +1,30 @@
+{
+  "checked_at": "2026-11-05 17:15",
+  "titles": [
+    {
+      "title": "นางนาก (Nang Nak)",
+      "type": "Movie",
+      "year": "1999",
+      "rows": [
+        {"platform": "Netflix", "season": "–", "viewing_type": "–", "status": "ไม่พบข้อมูล", "link": null}
+      ],
+      "recommendation_reason": "",
+      "notes": [
+        "เวอร์ชันที่ผู้ใช้เลือก: นางนาก (2542/1999) ผู้กำกับ นนทรีย์ นิมิบุตร นำแสดงโดย อินทิรา เจริญปุระ และ วินัย ไกรบุตร",
+        "Netflix: ข้อมูลขัดแย้งกัน — whatsnewonnetflix.com ระบุว่ามีใน Netflix ไทย (เข้าระบบ 19 ม.ค. 2022, ไม่มีวันที่อัปเดตล่าสุด) แต่ JustWatch Thailand ไม่พบเรื่องนี้เลย จึงใช้ ไม่พบข้อมูล",
+        "Netflix: หน้า title netflix.com/title/70026431 มีอยู่ แต่ตรวจจากนอกประเทศไทย ข้อความ not available in your country จึงไม่ใช่หลักฐานของประเทศไทย",
+        "Netflix: ข่าวปี 2022 (Time Out Bangkok, The Standard) ระบุว่าเป็น 1 ใน 19 หนังไทยคลาสสิกที่ Netflix ร่วมกับหอภาพยนตร์นำขึ้นระบบ — ข้อมูลเก่ากว่า 30 วัน",
+        "JustWatch Thailand: ค้นทั้ง Nang Nak และ นางนาก ไม่พบภาพยนตร์ปี 1999 พบเพียงซีรีส์ The Legend of Nang Nak (2024) ซึ่งเป็นคนละเรื่อง",
+        "YouTube: พบคลิปเต็มเรื่องที่อัปโหลดโดยช่องที่ไม่สามารถยืนยันได้ว่าเป็นเจ้าของลิขสิทธิ์ จึงไม่นำมาแนะนำ",
+        "ควรตรวจซ้ำ: เปิด netflix.com/th/title/70026431 จากเครื่องในประเทศไทยเพื่อยืนยันสถานะ"
+      ]
+    }
+  ],
+  "sources": [
+    {"name": "JustWatch Thailand — ค้นหา Nang Nak / นางนาก", "url": "https://www.justwatch.com/th/search?q=Nang%20Nak", "checked_at": "2026-11-05 17:08"},
+    {"name": "What's on Netflix Thailand — Nang Nak (1999)", "url": "https://whatsnewonnetflix.com/thailand/903729/nang-nak-1999", "checked_at": "2026-11-05 17:14"},
+    {"name": "Netflix — Nang Nak title page", "url": "https://www.netflix.com/title/70026431", "checked_at": "2026-11-05 17:06"},
+    {"name": "Time Out Bangkok — Netflix Thailand streams 19 classic Thai films (2022-04-06)", "url": "https://www.timeout.com/bangkok/news/netflix-thailand-is-now-streaming-19-acclaimed-classic-thai-films-040622", "checked_at": "2026-11-05 17:13"},
+    {"name": "The Standard — Netflix x หอภาพยนตร์ 19 หนังไทย (2022-04-02)", "url": "https://thestandard.co/netflix-and-thai-film-archive-selected-19-thai-best-movies/", "checked_at": "2026-11-05 17:06"}
+  ]
+}

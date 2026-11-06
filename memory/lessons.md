@@ -19,3 +19,4 @@
 
 ## Lessons from real use
 <!-- Add new lessons at the top -->
+- 2026-11-05 — Opened the built-in browser to verify Thailand region; user did not want browser approval prompts → use web search/fetch only, do not open the browser unless the user asks

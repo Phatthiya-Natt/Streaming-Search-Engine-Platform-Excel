@@ -1,0 +1,119 @@
+{
+  "checked_at": "2026-11-05 17:08",
+  "titles": [
+    {
+      "title": "The Mummy (Brendan Fraser)",
+      "type": "Movie",
+      "year": "1999–2008",
+      "rows": [
+        {
+          "platform": "Netflix",
+          "season": "ภาค 1–3",
+          "viewing_type": "Subscription (ไม่พบข้อมูลแพ็กเกจ)",
+          "status": "มี",
+          "recommended": true,
+          "links": [
+            {
+              "part": "ภาค 1",
+              "url": "https://netflix.com/watch/20559714"
+            },
+            {
+              "part": "ภาค 2",
+              "url": "https://www.netflix.com/title/60020549"
+            },
+            {
+              "part": "ภาค 3",
+              "url": "https://netflix.com/watch/70099790"
+            }
+          ]
+        },
+        {
+          "platform": "Prime Video",
+          "season": "ภาค 1–3",
+          "viewing_type": "Subscription (ไม่พบข้อมูลแพ็กเกจ)",
+          "status": "มี",
+          "links": [
+            {
+              "part": "ภาค 1",
+              "url": "https://www.primevideo.com/-/th/detail/0HSSZPRLDK7MWSYH1ME15XTU7L"
+            },
+            {
+              "part": "ภาค 2",
+              "url": "https://www.primevideo.com/-/th/detail/0JT9JC8U0FQPOKT1DDY5XW8HLF"
+            },
+            {
+              "part": "ภาค 3",
+              "url": "https://www.primevideo.com/-/th/detail/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%A1%E0%B8%B1%E0%B8%A1%E0%B8%A1%E0%B8%B5%E0%B9%88-3-%E0%B8%84%E0%B8%B7%E0%B8%99%E0%B8%8A%E0%B8%B5%E0%B8%9E%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%A3%E0%B8%9E%E0%B8%A3%E0%B8%A3%E0%B8%94%E0%B8%B4%E0%B8%A1%E0%B8%B1%E0%B8%87%E0%B8%81%E0%B8%A3/0I5QN07CBWOO7B90VS8SPTX0EA"
+            }
+          ]
+        },
+        {
+          "platform": "Apple TV",
+          "season": "ภาค 1–3",
+          "viewing_type": "Rent / Buy",
+          "status": "มี",
+          "links": [
+            {
+              "part": "ภาค 1",
+              "url": "https://tv.apple.com/th/movie/the-mummy/umc.cmc.5xgyoskwz9n0qsg8zg95voqh8"
+            },
+            {
+              "part": "ภาค 3",
+              "url": "https://tv.apple.com/movie/umc.cmc.6n2sp1uate2qov4znwd1ijhpu"
+            }
+          ]
+        },
+        {
+          "platform": "HBO Max",
+          "season": "–",
+          "viewing_type": "–",
+          "status": "ไม่มี",
+          "link": null
+        },
+        {
+          "platform": "Disney+",
+          "season": "–",
+          "viewing_type": "–",
+          "status": "ไม่มี",
+          "link": null
+        }
+      ],
+      "recommendation_reason": "Subscription with all 3 parts (Netflix and Prime Video both have ภาค 1–3; Netflix listed first by JustWatch Thailand)",
+      "notes": [
+        "ภาค 1 = The Mummy (1999)",
+        "ภาค 2 = The Mummy Returns (2001)",
+        "ภาค 3 = The Mummy: Tomb of the Dragon Emperor (2008)",
+        "Source of availability: JustWatch Thailand pages for all 3 parts (checked by JustWatch on 11 Oct 2026, 5 Nov 2026 and 4 Nov 2026)",
+        "Apple TV: Rent 99 บาท / Buy 299 บาท for each part (JustWatch Thailand); the Thai Apple TV page for ภาค 1 was opened and confirmed",
+        "Apple TV: no Thailand or region-neutral page link was found for ภาค 2, so it has no Watch link",
+        "Prime Video: Thai-language title pages exist for all 3 parts but could not be opened; two pages exist for ภาค 1, so the link may open the rent/buy page instead of the Prime page",
+        "Netflix and Prime Video packages were not shown",
+        "HBO Max, Disney+: not listed by JustWatch Thailand for any part",
+        "Not included: The Mummy (2017, Tom Cruise), Lee Cronin's The Mummy (2026), The Scorpion King spin-offs",
+        "Unlicensed uploads (e.g. user videos on Bilibili) and piracy sites in search results were excluded"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "name": "JustWatch Thailand — The Mummy (1999)",
+      "url": "https://www.justwatch.com/th/movie/the-mummy",
+      "checked_at": "2026-11-05 17:08"
+    },
+    {
+      "name": "JustWatch Thailand — The Mummy Returns (2001)",
+      "url": "https://www.justwatch.com/th/movie/the-mummy-returns",
+      "checked_at": "2026-11-05 17:08"
+    },
+    {
+      "name": "JustWatch Thailand — The Mummy: Tomb of the Dragon Emperor (2008)",
+      "url": "https://www.justwatch.com/th/movie/the-mummy-tomb-of-the-dragon-emperor",
+      "checked_at": "2026-11-05 17:08"
+    },
+    {
+      "name": "Apple TV (TH) — The Mummy (1999)",
+      "url": "https://tv.apple.com/th/movie/the-mummy/umc.cmc.5xgyoskwz9n0qsg8zg95voqh8",
+      "checked_at": "2026-11-05 17:08"
+    }
+  ]
+}

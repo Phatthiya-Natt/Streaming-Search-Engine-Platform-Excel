@@ -105,12 +105,16 @@ The user may provide titles in the following format:
 4. Statuses are color-coded: a light background with **bold, darker text of the same color** so it is easy to read:
    `มี` = light green / dark green, `ไม่มี` = light red / dark red, `ไม่พบข้อมูล` = light gray / dark gray.
 5. Viewing links and sources must be clickable (hyperlinks). Viewing links open the title's own watch page (see Column Rules 7).
-6. No row highlight in the table. The recommended platform is stated in the Summary sheet (`Recommended` row).
+6. The recommended platform is highlighted in the table: **only its `Streaming Platform` cell** gets a ⭐ before the name,
+   a light green background, and bold text, with a small dark green `(แนะนำ)` label on a second line in the same cell
+   (e.g. `⭐ Netflix` / `(แนะนำ)`). It is also stated in the Summary sheet (`Recommended` row).
    Pick the first match among `มี` rows:
    a platform the user already has (from memory) → `Free` → `Subscription` with the most seasons/parts → `Rent / Buy`.
    If no row is `มี`, write `–`.
 7. A **"สรุป" box** sits under the table (platform names in bold), and a separate summary sheet states the date and time,
    the data sources, a **Watch links** table (one row per part), and **Notes as bullet points, one per row**.
+   If any row is `ไม่พบข้อมูล`, a **"Note:"** box sits right under the "สรุป" box:
+   `ไม่พบข้อมูล คือ ระบบค้นหาแล้วไม่เจอข้อมูล เนื่องจาก` followed by one bullet per platform with its reason (in Thai).
 8. Name the file `[ชื่อหนัง]_Streaming_Platform_[YYYY-MM-DD].xlsx` using the search date,
    e.g. `Harry_Potter_Streaming_Platform_2026-11-04.xlsx`, saved in `output/`.
    Spaces become `_`; characters not allowed in file names (`\ / : * ? " < > |`, brackets, commas) are removed.
@@ -132,8 +136,12 @@ column headers exactly as specified:
    For a movie series, list only the parts that platform has: e.g. Platform A `ภาค 1–3`, Platform B `ภาค 2–7`,
    or `ภาค 1–3, 5` when parts are not consecutive. A platform with some parts is still `มี`.
    List the film for each part number in Notes (e.g. `ภาค 1 = Philosopher's Stone (2001)`).
-5. รูปแบบการรับชม: Subscription / Rent / Buy / Free. If a package is required, add it in brackets, e.g. `Subscription (Premium)`.
-   Unknown package → `Subscription (ไม่พบข้อมูลแพ็กเกจ)`.
+5. รูปแบบการรับชม: Subscription / Rent / Buy / Free.
+   For Subscription, show the **cheapest package that includes the title** and its Thailand price in brackets:
+   `Subscription (Standard 1,390 บาท/ปี ขึ้นไป)` — price as `#,##0 บาท` per เดือน or ปี; `ขึ้นไป` = higher packages also include it.
+   Package name found but no price → `Subscription (Premium, ไม่พบข้อมูลราคา)`.
+   Nothing found → `Subscription (ไม่พบข้อมูลแพ็กเกจ)`.
+   Prices must come from the platform's official Thailand page (title page, plans page, or help center). Never guess.
 6. สถานะในไทย: มี / ไม่มี / ไม่พบข้อมูล
 7. ลิงก์: the platform's own page for that title, where the user can press play, rent, or buy it,
    shown as a clickable `ลิงก์` hyperlink.
@@ -155,6 +163,11 @@ Show the same table in chat, followed by:
 
 **สรุป:** เรื่องนี้สามารถรับชมได้บน **...** (Subscription) และ **...** (Free) ในประเทศไทย
 และสามารถเช่าหรือซื้อผ่าน **...** (ตรวจสอบเมื่อ [วันที่ / เวลา])
+
+**Note:** ไม่พบข้อมูล คือ ระบบค้นหาแล้วไม่เจอข้อมูล เนื่องจาก
+- **<Platform>**: <reason in Thai>
+
+(Show the Note only when at least one row is `ไม่พบข้อมูล`; one bullet per platform.)
 
 **Sources:**
 - [Source name](url) — checked at YYYY-MM-DD HH:MM (UTC+7)

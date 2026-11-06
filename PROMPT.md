@@ -23,7 +23,8 @@ Season / edition / year (if given): {{...}}
 2. Find which streaming platforms offer it
 3. Check only services available in Thailand
 4. Classify the viewing type: Subscription / Rent / Buy / Free
-5. If a subscription is required, state the package needed
+5. If a subscription is required, state the cheapest package that includes the title and its Thailand price
+   (from the platform's official Thailand page)
 6. If there are several seasons/parts, state which seasons/parts each platform has
 7. If the title has several versions (movie, series, anime, live action, remake),
    ask the user which one they mean first — never pick one yourself.
@@ -51,7 +52,9 @@ Use these column headers exactly (do not translate or rename them):
 | ชื่อเรื่อง | ประเภท | Streaming Platform | Season / Part | รูปแบบการรับชม | สถานะในไทย | ลิงก์ |
 |---|---|---|---|---|---|---|
 
-- รูปแบบการรับชม: Subscription / Rent / Buy / Free; package in brackets, e.g. Subscription (Premium)
+- รูปแบบการรับชม: Subscription / Rent / Buy / Free; for Subscription add the package and price in brackets,
+  e.g. Subscription (Standard 1,390 บาท/ปี ขึ้นไป); no price → Subscription (Premium, ไม่พบข้อมูลราคา);
+  nothing found → Subscription (ไม่พบข้อมูลแพ็กเกจ)
 - Season / Part: for a movie series, only the parts that platform has, e.g. ภาค 1–3
 - ลิงก์: the platform's own page for that title (play / rent / buy) — never an aggregator, search, or category page; – if none
 - "–" means no value for this cell; it is not a status
@@ -61,6 +64,10 @@ Use these column headers exactly (do not translate or rename them):
 
 **Sources:**
 - [Source name](URL) — checked at YYYY-MM-DD HH:MM (UTC+7)
+
+**Note:** ไม่พบข้อมูล คือ ระบบค้นหาแล้วไม่เจอข้อมูล เนื่องจาก
+- **<Platform>**: <reason in Thai>
+(only when at least one row is ไม่พบข้อมูล)
 
 **Notes:** bullet points, one per line (part list for a movie series, reasons for ไม่พบข้อมูล, items to re-check)
 
@@ -74,8 +81,10 @@ If nothing is found, answer:
 3. Number formats: prices #,##0 "บาท", times XX นาที (only if shown); check time yyyy-mm-dd hh:mm
 4. Status colors: light background + bold darker text of the same color: มี = green, ไม่มี = red, ไม่พบข้อมูล = gray
 5. Viewing links (to the title's own watch page) and sources are clickable hyperlinks
-6. No row highlight; the recommended platform is stated in the Summary sheet (user's platform → Free → Subscription with most seasons → Rent / Buy)
-7. A "สรุป" box under the table (platform names in bold) + a separate Summary sheet with the check date/time,
+6. The recommended platform's cell shows ⭐ + bold name with a small (แนะนำ) on a second line, on a light green background
+   (e.g. ⭐ Netflix / (แนะนำ)), and it is stated in the Summary sheet (user's platform → Free → Subscription with most seasons → Rent / Buy)
+7. A "สรุป" box under the table (platform names in bold), then a "Note:" box explaining every ไม่พบข้อมูล row,
+   + a separate Summary sheet with the check date/time,
    Notes (one bullet per row), Watch links (one row per part), and the data sources
 8. File name: [ชื่อหนัง]_Streaming_Platform_[YYYY-MM-DD].xlsx, e.g. Harry_Potter_Streaming_Platform_2026-11-05.xlsx
 ```
@@ -104,9 +113,11 @@ If nothing is found, answer:
 - [ ] Status colors correct
 - [ ] Links clickable and open the title's watch page (not JustWatch / search pages)
 - [ ] Only 3 statuses: มี / ไม่มี / ไม่พบข้อมูล
+- [ ] Subscription rows show package name + price (or ไม่พบข้อมูลแพ็กเกจ / ไม่พบข้อมูลราคา)
+- [ ] "Note:" box under สรุป explains every ไม่พบข้อมูล row
 - [ ] Notes: one bullet per row; Watch links: one row per part
 - [ ] File name: [ชื่อหนัง]_Streaming_Platform_[date].xlsx
-- [ ] No row highlight; recommendation shown in the Summary sheet
+- [ ] Recommended platform cell: ⭐ + small (แนะนำ) + light green; also shown in the Summary sheet
 - [ ] Summary sheet columns and rows fit the text (nothing cut off)
 - [ ] Summary sheet with date/time and sources
 - [ ] File name contains the date

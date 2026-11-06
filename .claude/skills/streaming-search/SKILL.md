@@ -58,6 +58,10 @@ Suggested queries (run several, one per query):
 - `"<title>" site:<platform domain>`
 - `รับชม "<Thai title>"` (finds platform title pages in Thai, e.g. Disney+ / HBO Max)
 - For anime, add: `Thai license`, `Thai subtitles`, `Thai dub`
+- For every Subscription platform, also find its Thailand packages and prices:
+  `<platform> ราคาแพ็กเกจ` / `<platform> plans Thailand` → use only the platform's official page
+  (title page, plans page, or help center). Start from the plans page saved in `memory/thai-platforms.md`
+  and add the page you used to `sources`. Find the **cheapest package that includes the title**.
 
 Check every platform in `memory/thai-platforms.md`. A platform that was not checked must never be reported as `ไม่มี`.
 
@@ -79,10 +83,11 @@ Per platform, collect:
 |---|---|
 | Streaming Platform | Official name of a real platform found in this search |
 | Season / Part | Only what is **shown on the actual page**, e.g. `Season 1–3`, `The Final Season Part 1–2` · single movie or status not `มี` → `–` · movie series → only the parts on that platform, e.g. `ภาค 1–3`, `ภาค 2–7`, `ภาค 1–3, 5` |
-| รูปแบบการรับชม | `Subscription` / `Rent` / `Buy` / `Free`, joined with ` / ` · package in brackets: `Subscription (Premium)` · unknown package → `Subscription (ไม่พบข้อมูลแพ็กเกจ)` |
+| รูปแบบการรับชม | `Subscription` / `Rent` / `Buy` / `Free`, joined with ` / ` · for Subscription, record the cheapest package that includes the title + its THB price (goes in `package`, Step 7) |
 | ลิงก์ | The platform's **own page for that title** (play / rent / buy). Never an aggregator, search, or category page. None found → `–` |
 | Source + time | Source used to verify + timestamp (UTC+7) |
 | สถานะในไทย | `มี` / `ไม่มี` / `ไม่พบข้อมูล` |
+| Reason (`ไม่พบข้อมูล` only) | Why nothing was found, in Thai, e.g. `ไม่พบหน้าหนังของ Netflix ประเทศไทย` (goes in `reason`, Step 7) |
 
 ## Step 5 — Decide the status
 ```
@@ -94,7 +99,8 @@ Conflicting data / other region / data older than 30 days     → ไม่พ�
 ```
 
 ## Step 6 — Pick the recommended platform
-One per title (set `"recommended": true` on that row). It is written in the Summary sheet; the table row is **not** highlighted.
+One per title (set `"recommended": true` on that row). In the table, that row's `Streaming Platform` cell shows `⭐ <platform>`
+in bold with a small `(แนะนำ)` on a second line, on a light green background; it is also written in the Summary sheet. Write the platform name in the JSON **without** the ⭐ — the script adds it.
 Among `มี` rows, pick the first match:
 1. A platform the user already has (from `user-preferences.md`) with the most seasons/parts
 2. `Free` with the most seasons/parts
@@ -117,12 +123,14 @@ Write the verified results to `output/results_YYYY-MM-DD_HHMM.json`. This JSON i
       "type": "Movie",
       "year": "2017–2026",
       "rows": [
-        {"platform": "Disney+", "season": "ภาค 1–3", "viewing_type": "Subscription (ไม่พบข้อมูลแพ็กเกจ)",
+        {"platform": "Disney+", "season": "ภาค 1–3", "viewing_type": "Subscription",
+         "package": {"name": "Standard", "price": 299, "per": "เดือน", "or_higher": true},
          "status": "มี", "recommended": true,
          "links": [{"part": "ภาค 1", "url": "https://www.disneyplus.com/th-th/browse/entity-..."},
                    {"part": "ภาค 2", "url": "https://www.disneyplus.com/th-th/browse/entity-..."},
                    {"part": "ภาค 3", "url": "https://www.disneyplus.com/th-th/browse/entity-..."}]},
-        {"platform": "Netflix", "season": "–", "viewing_type": "–", "status": "ไม่พบข้อมูล", "link": null}
+        {"platform": "Netflix", "season": "–", "viewing_type": "–", "status": "ไม่พบข้อมูล", "link": null,
+         "reason": "ไม่พบหน้าหนังของ Netflix ประเทศไทย"}
       ],
       "recommendation_reason": "Subscription with the most parts",
       "notes": [
@@ -144,10 +152,16 @@ Write the verified results to `output/results_YYYY-MM-DD_HHMM.json`. This JSON i
   the Summary sheet lists every part under "Watch links". Use `null` / omit when there is no title page.
 - The script stops with an error if a link points to an aggregator (JustWatch, wheretowatch, TMDB) — put those in `sources` only.
 - `notes` is a list: one item per point (one per part, one per platform note). Each item becomes its own bullet row.
+- `package` (Subscription rows): `name`, `price` (number only, no "บาท"), `per` (`"เดือน"` or `"ปี"`), `or_higher`
+  (`true` if higher packages also include the title). Keep `viewing_type` as plain `"Subscription"`: the script writes
+  `Subscription (Standard 299 บาท/เดือน ขึ้นไป)`. Name only → omit `price` (shows `ไม่พบข้อมูลราคา`).
+  No package found → omit `package` (shows `ไม่พบข้อมูลแพ็กเกจ`). The example price above is a placeholder — always use the real one.
+- `reason` (`ไม่พบข้อมูล` rows): required, in Thai. The script stops with an error if it is missing.
+  These reasons fill the "Note:" box under the summary.
 - Do not write a summary sentence in the JSON. The script builds the "สรุป" sentence from the rows, so it always matches the table.
 
 ## Step 8 — Build the Excel file
-1. If `output/build_excel.py` does not exist, create it with **exactly** the code below. Do not rewrite or "improve" it, so every report has the same format.
+1. **Every run**, write `output/build_excel.py` with **exactly** the code below, overwriting any older copy (the code may have been updated). Do not rewrite or "improve" it, so every report has the same format.
 2. Install the library if needed: `pip install openpyxl`
 3. Run: `python output/build_excel.py output/results_YYYY-MM-DD_HHMM.json`
 4. The script prints the file path, e.g. `output/Harry_Potter_Streaming_Platform_2026-11-05.xlsx`.
@@ -160,9 +174,10 @@ What the script does (maps to the Excel criteria in CLAUDE.md):
 | 2. Widths and heights fit | On both sheets, every time: column width from the longest text (Thai vowel/tone marks not counted, max 60 on Results / 80 on Summary), wrap text, and row height from the number of wrapped lines |
 | 3. Number formats | Check time `yyyy-mm-dd hh:mm` |
 | 4. Status colors | Light fill + bold dark text of the same color: `มี` green, `ไม่มี` red, `ไม่พบข้อมูล` gray |
+| Package and price | `Subscription (Standard 1,390 บาท/ปี ขึ้นไป)` built from `package` |
 | 5. Hyperlinks | `ลิงก์` column opens the title's watch page; Watch links and source URLs are clickable; aggregator links are rejected |
-| 6. Recommendation | No row highlight; `Recommended` row on the Summary sheet |
-| 7. Summary | "สรุป" box under the table on `Results` (platform names in bold) + `Summary` sheet: check time, summary, recommendation, Notes (one bullet per row), Watch links (one row per part), sources |
+| 6. Recommendation | Recommended `Streaming Platform` cell only: `⭐ <platform>` in bold + small dark green `(แนะนำ)` on a second line, light green fill; also the `Recommended` row on the Summary sheet |
+| 7. Summary | "สรุป" box under the table on `Results` (platform names in bold), then a "Note:" box explaining every `ไม่พบข้อมูล` row (from `reason`) + `Summary` sheet: check time, summary, recommendation, Notes (one bullet per row), Watch links (one row per part), sources |
 | 8. File name | `[ชื่อหนัง]_Streaming_Platform_YYYY-MM-DD.xlsx` (spaces → `_`, invalid characters removed, `_HHMM` added if the file exists) |
 
 ```python
@@ -193,6 +208,7 @@ def check_watch_link(url, platform):
 HEADER_FILL = PatternFill("solid", fgColor="1F3864")   # dark blue
 HEADER_FONT = Font(bold=True, color="FFFFFF")
 LINK_FONT = Font(color="0563C1", underline="single")
+RECOMMEND_FILL = PatternFill("solid", fgColor="E2EFDA")   # light green: recommended platform cell
 THIN = Side(style="thin", color="BFBFBF")
 BORDER = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
 WRAP = Alignment(vertical="top", wrap_text=True)
@@ -307,6 +323,50 @@ def summary_box(ws, top, label, parts, ncols=7):
     ws.row_dimensions[top + 1].height = 18 * lines + 14
 
 
+def viewing_text(row):
+    """รูปแบบการรับชม: adds the package name and price to Subscription, e.g. Subscription (Standard 1,390 บาท/ปี ขึ้นไป)."""
+    base = row.get("viewing_type") or "–"
+    if "Subscription" not in base or "(" in base:
+        return base
+    pkg = row.get("package")
+    if pkg and pkg.get("name") and pkg.get("price") is not None:
+        text = f'{pkg["name"]} {pkg["price"]:,.0f} บาท/{pkg.get("per", "เดือน")}'
+        text += " ขึ้นไป" if pkg.get("or_higher") else ""
+    elif pkg and pkg.get("name"):
+        text = f'{pkg["name"]}, ไม่พบข้อมูลราคา'
+    else:
+        text = "ไม่พบข้อมูลแพ็กเกจ"
+    return base.replace("Subscription", f"Subscription ({text})", 1)
+
+
+def not_found_note(ws, top, rows, ncols=7):
+    """'Note:' box under the summary: explains every ไม่พบข้อมูล row, one bullet per row. Returns rows used."""
+    missing = [x for x in rows if x["status"] == "ไม่พบข้อมูล"]
+    if not missing:
+        return 0
+    for x in missing:
+        if not x.get("reason"):
+            raise ValueError(f'{x["platform"]}: a ไม่พบข้อมูล row needs a "reason"')
+    lines = [("Note:", True), ("ไม่พบข้อมูล คือ ระบบค้นหาแล้วไม่เจอข้อมูล เนื่องจาก", False)]
+    lines += [(f'• {x["platform"]}: {x["reason"]}', False) for x in missing]
+    side = Side(style="thin", color="BFBFBF")
+    total_w = sum(ws.column_dimensions[get_column_letter(i)].width or 10 for i in range(1, ncols + 1))
+    for i, (text, bold) in enumerate(lines):
+        row = top + i
+        ws.merge_cells(start_row=row, start_column=1, end_row=row, end_column=ncols)
+        for col in range(1, ncols + 1):
+            ws.cell(row=row, column=col).border = Border(
+                left=side if col == 1 else None, right=side if col == ncols else None,
+                top=side if i == 0 else None, bottom=side if i == len(lines) - 1 else None)
+        c = ws.cell(row=row, column=1, value=text)
+        c.font = Font(bold=bold, color="3A3838")
+        c.fill = PatternFill("solid", fgColor="F2F2F2")
+        c.alignment = Alignment(vertical="center", wrap_text=True, indent=1)
+        n = max(1, -(-int(text_width(text) * 1.1) // int(total_w)))
+        ws.row_dimensions[row].height = 17 * n + 6
+    return len(lines)
+
+
 def file_title(titles):
     """[ชื่อหนัง] part of the file name: spaces → _, characters Windows does not allow are removed."""
     name = titles[0]["title"] if len(titles) == 1 else f'{titles[0]["title"]}_and_{len(titles) - 1}_more'
@@ -332,10 +392,16 @@ def build(json_path):
             if status not in STATUS_FILL:
                 raise ValueError(f"Invalid status: {status}")
             values = [t["title"], t["type"], row["platform"], row.get("season") or "–",
-                      row.get("viewing_type") or "–", status, None]
+                      viewing_text(row), status, None]
             for i, v in enumerate(values, 1):
                 c = ws.cell(row=r, column=i, value=v)
                 c.alignment, c.border = WRAP, BORDER
+            if row.get("recommended") and status == "มี":     # recommended: ⭐ name + small "(แนะนำ)" line, light green cell
+                pc = ws.cell(row=r, column=3)
+                pc.value = CellRichText([TextBlock(InlineFont(b=True), f'⭐ {row["platform"]}'),
+                                         TextBlock(InlineFont(sz=9, color="375623"), "\n(แนะนำ)")])
+                pc.fill = RECOMMEND_FILL
+                pc.alignment = Alignment(vertical="top", wrap_text=True)
             sc = ws.cell(row=r, column=6)
             bg, fg = STATUS_FILL[status]
             sc.fill = PatternFill("solid", fgColor=bg)
@@ -354,6 +420,9 @@ def build(json_path):
     fit_columns(ws)
     ws.column_dimensions["G"].width = 10
     fit_rows(ws)
+    for rr in range(2, ws.max_row + 1):                  # recommended cell has 2 lines: fixed row height
+        if isinstance(ws.cell(row=rr, column=3).value, CellRichText):
+            ws.row_dimensions[rr].height = 34
     ws.page_setup.orientation = "landscape"
     ws.page_setup.fitToWidth, ws.page_setup.fitToHeight = 1, 0
     ws.sheet_properties.pageSetUpPr.fitToPage = True
@@ -363,7 +432,9 @@ def build(json_path):
     for t in data["titles"]:
         label = "สรุป" if len(data["titles"]) == 1 else f'สรุป — {t["title"]}'
         summary_box(ws, r, label, summary_parts(t, checked))
-        r += 3
+        r += 2
+        r += not_found_note(ws, r, t["rows"])   # "Note:" box right under the summary, only if there are ไม่พบข้อมูล rows
+        r += 1
 
     # ---- Sheet 2: Summary ----
     sm = wb.create_sheet("Summary")
@@ -460,9 +531,10 @@ Show the same data as the JSON, in the chat format from CLAUDE.md:
    - `เรื่องนี้สามารถรับชมได้บน **A** (Subscription) และ **B** (Free) ในประเทศไทย และสามารถเช่าหรือซื้อผ่าน **C** (ตรวจสอบเมื่อ YYYY-MM-DD HH:MM น.)`
    - Only Rent/Buy: `เรื่องนี้ไม่มีให้รับชมแบบ Subscription หรือ Free ในประเทศไทย แต่สามารถเช่าหรือซื้อผ่าน **C** (ตรวจสอบเมื่อ ...)`
    - Nothing: `ตรวจสอบแล้ว ไม่พบ Platform ที่ให้บริการเรื่องนี้ในประเทศไทย (ตรวจสอบเมื่อ ...)`
-3. **Sources** with check times
-4. **Notes** as bullet points, one per line (same items as `notes` in the JSON)
-5. **Excel file:** the path printed by the script
+3. **Note** (only if a row is `ไม่พบข้อมูล`): `ไม่พบข้อมูล คือ ระบบค้นหาแล้วไม่เจอข้อมูล เนื่องจาก` + one bullet per platform with its `reason`
+4. **Sources** with check times (include the package/price pages)
+5. **Notes** as bullet points, one per line (same items as `notes` in the JSON)
+6. **Excel file:** the path printed by the script
 
 If no platform in Thailand offers the title, use the "Nothing" sentence above and list the sources checked.
 
@@ -496,6 +568,9 @@ If no platform in Thailand offers the title, use the "Nothing" sentence above an
 
 **สรุป:** เรื่องนี้สามารถรับชมได้บน **Disney+** (Subscription) ในประเทศไทย และสามารถเช่าหรือซื้อผ่าน **Prime Video (Amazon Video)** และ **Apple TV** (ตรวจสอบเมื่อ 2026-11-05 13:00 น.)
 
+**Note:** ไม่พบข้อมูล คือ ระบบค้นหาแล้วไม่เจอข้อมูล เนื่องจาก
+- **Netflix**: พบหน้าภาษาไทยของภาค 3 แต่ขึ้นว่าไม่มีในประเทศของผู้ค้นหา (ระบบค้นหาจากนอกประเทศไทย) จึงยืนยันไม่ได้
+
 **Notes:**
 - ภาค 1 = Spider-Man: Homecoming (2017)
 - ภาค 2 = Spider-Man: Far From Home (2019)
@@ -514,11 +589,13 @@ If no platform in Thailand offers the title, use the "Nothing" sentence above an
 - [ ] Every platform name is a real platform found in this search (no placeholders)
 - [ ] Every row is Thailand-region data
 - [ ] Only the three statuses are used: `มี` / `ไม่มี` / `ไม่พบข้อมูล`
+- [ ] Every Subscription row has the cheapest package + THB price from an official Thailand page (or `ไม่พบข้อมูลแพ็กเกจ` / `ไม่พบข้อมูลราคา`)
+- [ ] Every `ไม่พบข้อมูล` row has a Thai `reason`, shown in the "Note:" box in chat and Excel
 - [ ] No guessed seasons, parts, packages, or prices
 - [ ] Every `ลิงก์` opens the platform's page for that title (not an aggregator, search, or category page)
 - [ ] Movie series: parts listed per platform, part list in Notes, every part in Watch links
 - [ ] Notes written as a list (one bullet per row in Excel)
-- [ ] One recommended platform per title in the Summary sheet (or `–` if nothing is `มี`); no row highlight
+- [ ] One recommended platform per title (or `–` if nothing is `มี`): ⭐ + small (แนะนำ) + light green on its Streaming Platform cell, and in the Summary sheet
 - [ ] Chat table and Excel file show the same data
 - [ ] Excel built with the script above; file named `[ชื่อหนัง]_Streaming_Platform_YYYY-MM-DD.xlsx`
 - [ ] Sources and check time included
